@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Data\DataContainer.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="Formats\IFileFormat.cs" />

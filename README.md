@@ -1,5 +1,7 @@
 # SharpOffice #
-The purpose of this project is to create a cross-platform open-source Office suite written in C#.
+The purpose of this project is to create a cross-platform open-source Office suite written in C#. The idea is that it should be very modularized for easy plugin creation. Each application will be just a library that when plugged into the runtime will display all necessary features for the program while using the common code base.
+
+I will comment my progress on my blog http://md-techblog.net.pl [Polish]
 
 The suite will be divided into several applications:
 * __SharpWriter__ (text document editing)
