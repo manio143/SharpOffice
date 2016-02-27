@@ -11,7 +11,9 @@ namespace SharpOffice.Core.Formats
 {
     public interface IFileFormat
     {
-        void WriteData(DataContainer data, Stream stream);
-        DataContainer ReadData(Stream stream);
+        IDataConverter Converter { get; }
+
+        void WriteData(IData data, Stream stream);
+        IData ReadData(Stream stream);
     }
 }
