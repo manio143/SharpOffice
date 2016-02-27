@@ -8,5 +8,6 @@ namespace SharpOffice.Core.Configuration
 {
     public interface IConfiguration
     {
+        T GetProperty<T>(string propertyName);
     }
 }
