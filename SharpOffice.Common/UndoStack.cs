@@ -41,6 +41,8 @@ namespace SharpOffice.Common
 
         public ICommand Pop()
         {
+            if(_stepsLeft == 0)
+                throw new EmptyStackException();
             var cmd = _stack[_currentArray][_currentIndex];
             _stack[_currentArray][_currentIndex] = null;
             if (--_currentIndex < 0)
