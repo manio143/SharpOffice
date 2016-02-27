@@ -37,8 +37,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.3.8.0\lib\net35\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\BinaryConfigurationFormat.cs" />
+    <Compile Include="Configuration\YamlConfiguration.cs" />
     <Compile Include="Data\TextData.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,6 +55,9 @@
       <Project>{42E8084D-FEEC-42BC-AA00-94A4397B3EB6}</Project>
       <Name>SharpOffice.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

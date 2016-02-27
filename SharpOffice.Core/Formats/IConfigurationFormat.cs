@@ -6,6 +6,6 @@ namespace SharpOffice.Core.Formats
     public interface IConfigurationFormat
     {
         void WriteConfiguration(IConfiguration data, Stream stream);
-        IConfiguration ReadConfiguration(Stream stream);
+        T ReadConfiguration<T>(Stream stream) where T : IConfiguration, new();
     }
 }

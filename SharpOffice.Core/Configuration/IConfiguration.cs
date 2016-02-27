@@ -9,5 +9,7 @@ namespace SharpOffice.Core.Configuration
     public interface IConfiguration
     {
         T GetProperty<T>(string propertyName);
+        void SetProperty<T>(string propertyName, T propertyValue);
+        IEnumerable<KeyValuePair<string, object>> GetAllProperties();
     }
 }
