@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using SharpOffice.Window.Components;
 
 namespace SharpOffice.Window.UI
 {
     /// <summary>
     /// The class describing a MenuItem
     /// </summary>
-    public class MenuItem
+    public class MenuItem : IComponent
     {
         public MenuItem Parent { get; internal set; }
         public ICollection<MenuItem> Children { get; internal set; }

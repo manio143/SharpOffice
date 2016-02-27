@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpOffice.Window.Components
 {
-    public abstract class ComponentBase
+    public abstract class IComponent
     {
         //TODO: Plan component architecture
     }
