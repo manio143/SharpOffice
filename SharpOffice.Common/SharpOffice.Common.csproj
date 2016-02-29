@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\BinaryConfigurationFormat.cs" />
-    <Compile Include="Configuration\YamlConfiguration.cs" />
+    <Compile Include="Configuration\YamlConfigurationFormat.cs" />
     <Compile Include="Data\TextData.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
