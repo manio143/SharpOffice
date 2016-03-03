@@ -7,9 +7,11 @@ namespace SharpOffice.Common
     public class UndoStack
     {
         private ICommand[][] _stack;
+        private ICommand[] _redoStack;
         private int _undoSteps;
         private int _currentArray;
         private int _currentIndex;
+        private int _currentRedoIndex;
         private int _stepsLeft;
 
         public UndoStack(int undoSteps)
@@ -18,9 +20,10 @@ namespace SharpOffice.Common
             _stack = new ICommand[2][];
             _stack[0] = new ICommand[_undoSteps];
             _stack[1] = new ICommand[_undoSteps];
+            _redoStack = new ICommand[_undoSteps];
         }
 
-        public void Push(ICommand cmd)
+        public void Insert(ICommand cmd)
         {
             if (++_currentIndex >= _undoSteps)
             {
@@ -37,14 +40,15 @@ namespace SharpOffice.Common
             }
             _stepsLeft++;
             _stack[_currentArray][_currentIndex] = cmd;
+            _currentRedoIndex = 0;
         }
 
-        public ICommand Pop()
+        public ICommand Undo()
         {
-            if(_stepsLeft == 0)
+            if (_stepsLeft == 0)
                 throw new EmptyStackException();
             var cmd = _stack[_currentArray][_currentIndex];
-            _stack[_currentArray][_currentIndex] = null;
+            _redoStack[_currentRedoIndex++] = cmd;
             if (--_currentIndex < 0)
             {
                 if (_currentArray == 0)
@@ -61,6 +65,13 @@ namespace SharpOffice.Common
             return _stack[_currentArray][_currentIndex];
         }
 
+        public ICommand Redo()
+        {
+            if (--_currentRedoIndex < 0)
+                throw new InvalidOperationException("Nothing to redo.");
+            return _redoStack[_currentRedoIndex];
+        }
+
         public int StepsLeft { get { return _stepsLeft; } }
     }
 
@@ -71,17 +82,20 @@ namespace SharpOffice.Common
         {
         }
 
-        public EmptyStackException(string message) : base(message)
+        public EmptyStackException(string message)
+            : base(message)
         {
         }
 
-        public EmptyStackException(string message, Exception inner) : base(message, inner)
+        public EmptyStackException(string message, Exception inner)
+            : base(message, inner)
         {
         }
 
         protected EmptyStackException(
             SerializationInfo info,
-            StreamingContext context) : base(info, context)
+            StreamingContext context)
+            : base(info, context)
         {
         }
     }
