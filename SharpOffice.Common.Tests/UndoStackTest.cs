@@ -57,5 +57,16 @@ namespace SharpOffice.Common.Tests
             BasicRedoTest();
             _undoStack.Redo();
         }
+
+        [TestMethod]
+        public void UndoRedoUndoTest()
+        {
+            BasicInsertTest();
+            var ucmd = _undoStack.Undo();
+            var rcmd =_undoStack.Redo();
+            var u2cmd = _undoStack.Undo();
+            Assert.AreEqual(ucmd, rcmd);
+            Assert.AreEqual(u2cmd, ucmd);
+        }
     }
 }
