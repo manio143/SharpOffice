@@ -2,6 +2,7 @@
 {
     public interface IValue
     {
-         
+        object Value { get; set; }
+        T Cast<T>();
     }
 }
