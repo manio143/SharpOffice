@@ -5,8 +5,9 @@ namespace SharpOffice.Core.Data
     public interface INode
     {
         INode GetParent();
-        IEnumerable<INode> GetChildren();
-        IEnumerable<IAttribute> GetAttributes();
+        IList<INode> GetChildren();
+
+        ICollection<IAttribute> GetAttributeCollection();
 
         IValue Value { get; set; }
     }

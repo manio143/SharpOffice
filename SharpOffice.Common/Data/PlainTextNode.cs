@@ -1,29 +1,36 @@
+using System.Collections.Generic;
+using System.Security.Policy;
 using SharpOffice.Core.Data;
 
 namespace SharpOffice.Common.Data
 {
     public class PlainTextNode : INode
     {
-        public PlainTextNode(IValue value)
+        protected readonly INode ParentNode;
+        protected readonly ICollection<IAttribute> AttributeCollection; 
+
+        public PlainTextNode(IValue value, INode parentNode = null)
         {
             Value = value;
+            ParentNode = parentNode;
+            AttributeCollection = new List<IAttribute>();
         }
 
-        public PlainTextNode() : this(new StringValue()) { }
+        public PlainTextNode(INode parentNode = null) : this(new StringValue(), parentNode) { }
 
         public INode GetParent()
         {
-            return null;
+            return ParentNode;
         }
 
-        public System.Collections.Generic.IEnumerable<INode> GetChildren()
+        public IList<INode> GetChildren()
         {
             return new INode[0];
         }
 
-        public System.Collections.Generic.IEnumerable<IAttribute> GetAttributes()
+        public ICollection<IAttribute> GetAttributeCollection()
         {
-            throw new System.NotImplementedException();
+            return AttributeCollection;
         }
 
         public IValue Value { get; set; }
