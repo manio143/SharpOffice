@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using SharpOffice.Window.Components;
+﻿using SharpOffice.Core.Configuration;
 
 namespace SharpOffice.Window
 {
     public interface IWindowDefinition
     {
-        ICollection<IComponent> Components { get; }
+        Xwt.Window Window { get; }
+        void Configure(IConfiguration configuration);
     }
 }
