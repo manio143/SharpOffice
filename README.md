@@ -9,7 +9,7 @@ The suite will be divided into several applications:
 * __SharpCalc__ (calculation sheet editing)
 * __SharpPresent__ (presentation editing)
 
-The project is using Xwt for GUI rendering. On each platform it will use native solutions (WPF on Windows, GTK# on Linux, Cocoa on Mac).
+The project is using Xwt for GUI rendering. On each platform it will use native solutions (WPF on Windows, GTK# on Linux, Cocoa on Mac). Because Visual Studio doesn't support nested solutions I referenced the libraries by path.
 
 ### Modules ###
 #### SharpOffice.Core ####
@@ -20,3 +20,14 @@ The common implementations of Core interfaces.
 This library defines objects that will construct the applications
 #### SharpOffice.Window.Runtime ####
 This is the main application which given a set of libraries will create a window with all necessary controls and behaviours.
+
+### Building ###
+
+	$ git submodule init
+	$ sit submodule update
+	$ msbuild Xwt/Xwt.sln	# xbuild on mono
+	$ nuget restore		# you'll have to provide path/to/nuget.exe
+				# on mono use `mono nuget.exe restore`
+	$ msbuild 
+
+Right now the build produces some errors on Mono, I may have to change my testing framework, as well as some other references.
