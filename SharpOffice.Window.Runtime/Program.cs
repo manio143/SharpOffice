@@ -1,7 +1,8 @@
 ﻿using System;
-using System.IO;
+using SharpOffice.Core;
 using SharpOffice.Core.Configuration;
 using SharpOffice.Window;
+using DryIoc;
 using Xwt;
 using Xwt.GtkBackend;
 
@@ -13,19 +14,21 @@ namespace SharpOffice
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             InitializeApplication();
+            ContainerWrapper.Initialize();
 
-            //Assembly load / Choose Type
-            IWindowDefinition definition;
-            IConfiguration config;
+            var container = ContainerWrapper.GetContainer();
+            var windowDefinition = GetWindowDefinition(container);
 
-            using (var window = WindowGenerator.Generate(definition, config))
+            using (var window = windowDefinition.Window)
             {
                 window.Show();
                 Application.Run();
             }
+
+            ContainerWrapper.Dispose();
         }
 
         public static void InitializeApplication()
@@ -36,6 +39,13 @@ namespace SharpOffice
                 Application.Initialize(ToolkitType.Cocoa);
             else
                 Application.Initialize(ToolkitType.Gtk);
+        }
+
+        private static IWindowDefinition GetWindowDefinition(Container container)
+        {
+            var windowDefinition = container.Resolve<IWindowDefinition>(serviceKey: "MainWindow");
+            windowDefinition.Configure(container.Resolve<IConfiguration>(serviceKey: "MainWindowConfiguration"));
+            return windowDefinition;
         }
     }
 }
