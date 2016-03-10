@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ApplicationAttribute.cs" />
+    <Compile Include="Attributes\WindowAttribute.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="ContainerWrapper.cs" />
     <Compile Include="Data\IAttribute.cs" />
     <Compile Include="Data\IData.cs" />
     <Compile Include="Data\IDataConverter.cs" />
@@ -49,10 +51,16 @@
     <Compile Include="Data\IMetadata.cs" />
     <Compile Include="Data\INode.cs" />
     <Compile Include="Data\IValue.cs" />
+    <Compile Include="DryIoc\AsyncExecutionFlowScopeContext.cs" />
+    <Compile Include="DryIoc\Container.cs" />
+    <Compile Include="DryIoc\FactoryCompiler.cs" />
     <Compile Include="Formats\IConfigurationFormat.cs" />
     <Compile Include="Formats\IFileFormat.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

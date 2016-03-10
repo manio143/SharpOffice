@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace SharpOffice.Core.Attributes
 {
@@ -11,12 +10,10 @@ namespace SharpOffice.Core.Attributes
         AllowMultiple = true, Inherited = true)]
     public class ApplicationAttribute : Attribute
     {
-        public Type Application { get; private set; }
+        public string Application { get; private set; }
 
-        public ApplicationAttribute(Type application)
+        public ApplicationAttribute(string application)
         {
-            if(application.GetInterfaces().All(x => x != typeof (IApplication)))
-                throw new ApplicationException("ApplicationAttribute may only be used with types that implement IApplication interface.");
             Application = application;
         }
     }
