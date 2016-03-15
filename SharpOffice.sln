@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOffice.Common", "Sharp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOffice.Common.Tests", "SharpOffice.Common.Tests\SharpOffice.Common.Tests.csproj", "{AC276A46-1328-4097-8396-AB2A3AEBFCF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOffice.SharpNote", "SharpOffice.SharpNote\SharpOffice.SharpNote.csproj", "{22327626-C5C6-40DE-A205-E6353431BD10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{AC276A46-1328-4097-8396-AB2A3AEBFCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC276A46-1328-4097-8396-AB2A3AEBFCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC276A46-1328-4097-8396-AB2A3AEBFCF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22327626-C5C6-40DE-A205-E6353431BD10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22327626-C5C6-40DE-A205-E6353431BD10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22327626-C5C6-40DE-A205-E6353431BD10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22327626-C5C6-40DE-A205-E6353431BD10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
