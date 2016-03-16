@@ -14,12 +14,22 @@ namespace SharpOffice
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        private static int Main(string[] args)
         {
-            InitializeApplication();
-            ContainerWrapper.Initialize();
+            if (args.Length < 1)
+            {
+                Console.WriteLine("Name of the Assembly containing IApplication definition is required.");
+                return 1;
+            }
+
+            string applicationAssemblyName = args[0];
+
+            InitializeXwtApplication();
+            ContainerWrapper.Initialize(applicationAssemblyName);
 
             var container = ContainerWrapper.GetContainer();
+            
+            InitializeApplication(container);
             var windowDefinition = GetWindowDefinition(container);
 
             using (var window = windowDefinition.Window)
@@ -29,9 +39,11 @@ namespace SharpOffice
             }
 
             ContainerWrapper.Dispose();
+
+            return 0;
         }
 
-        public static void InitializeApplication()
+        public static void InitializeXwtApplication()
         {
             if (Platform.IsWindows)
                 Application.Initialize(ToolkitType.Wpf);
@@ -39,6 +51,12 @@ namespace SharpOffice
                 Application.Initialize(ToolkitType.Cocoa);
             else
                 Application.Initialize(ToolkitType.Gtk);
+        }
+
+        private static void InitializeApplication(Container container)
+        {
+            var application = container.Resolve<IApplication>();
+            application.RegisterCustomTypes(container);
         }
 
         private static IWindowDefinition GetWindowDefinition(Container container)

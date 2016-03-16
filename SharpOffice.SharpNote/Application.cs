@@ -8,5 +8,10 @@ namespace SharpOffice.SharpNote
         {
             get { return "SharpNote"; }
         }
+
+        public void RegisterCustomTypes(DryIoc.Container container)
+        {
+            
+        }
     }
 }
