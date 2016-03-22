@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SharpOffice.Common.Commands;
 using SharpOffice.Core.Commands;
 
 namespace SharpOffice.Common.Tests
@@ -43,7 +44,7 @@ namespace SharpOffice.Common.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof (EmptyStackException))]
+        [ExpectedException(typeof(EmptyStackException))]
         public void ThrowOnEmptyStackTest()
         {
             BasicUndoTest();
@@ -51,7 +52,7 @@ namespace SharpOffice.Common.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof (InvalidOperationException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void ThrowOnEmptyRedoTest()
         {
             BasicRedoTest();
@@ -63,10 +64,26 @@ namespace SharpOffice.Common.Tests
         {
             BasicInsertTest();
             var ucmd = _undoStack.Undo();
-            var rcmd =_undoStack.Redo();
+            var rcmd = _undoStack.Redo();
             var u2cmd = _undoStack.Undo();
             Assert.AreEqual(ucmd, rcmd);
             Assert.AreEqual(u2cmd, ucmd);
+        }
+
+        [TestMethod]
+        public void ArrayChangeTest()
+        {
+            CreationTest();
+            for (int i = 0; i < 11; i++)
+                _undoStack.Insert(GetMockObject());
+            
+            Assert.AreEqual(10, _undoStack.StepsLeft);
+
+            for (int i = 0; i < 10; i++)
+                _undoStack.Insert(GetMockObject());
+            
+            for (int i = 0; i < 10; i++)
+                _undoStack.Undo();
         }
     }
 }

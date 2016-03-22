@@ -2,16 +2,17 @@
 using System.Runtime.Serialization;
 using SharpOffice.Core.Commands;
 
-namespace SharpOffice.Common
+namespace SharpOffice.Common.Commands
 {
     /// <summary>
     /// A simple stack implementation for inserting ICommand objects, with Undo and Redo
     /// </summary>
-    public class UndoStack
+    public class UndoStack : IUndoStack
     {
         private readonly ICommand[][] _stack;
         private readonly ICommand[] _redoStack;
         private readonly int _undoSteps;
+        private readonly ICommandExecutor _commandExecutor;
         private int _currentArray;
         private int _currentIndex;
         private int _currentRedoIndex;
@@ -22,8 +23,13 @@ namespace SharpOffice.Common
             _undoSteps = undoSteps;
             _stack = new ICommand[2][];
             _stack[0] = new ICommand[_undoSteps];
-            _stack[1] = new ICommand[_undoSteps];
             _redoStack = new ICommand[_undoSteps];
+        }
+
+        public UndoStack(int undoSteps, ICommandExecutor commandExecutor)
+            : this(undoSteps)
+        {
+            _commandExecutor = commandExecutor;
         }
 
         /// <summary>
@@ -33,9 +39,14 @@ namespace SharpOffice.Common
         public void Insert(ICommand cmd)
         {
             NextIndex();
-            _stepsLeft++;
+            IncreaseStepsLeft();
             _stack[_currentArray][_currentIndex] = cmd;
             _currentRedoIndex = 0;
+        }
+
+        private void IncreaseStepsLeft()
+        {
+            _stepsLeft += _stepsLeft < _undoSteps ? 1 : 0;
         }
 
         private void NextIndex()
@@ -49,12 +60,13 @@ namespace SharpOffice.Common
         private void NextArray()
         {
             if (_currentArray == 1)
-                _stack[0] = _stack[1];
-            else
             {
-                _stack[1] = new ICommand[_undoSteps];
-                _currentArray = 1;
+                ApplyChanges(0, 0, _undoSteps, ignoreNoCommandExecutor: true);
+                _stack[0] = _stack[1];
             }
+            else
+                _currentArray = 1;
+            _stack[1] = new ICommand[_undoSteps];
         }
 
         /// <summary>
@@ -85,7 +97,7 @@ namespace SharpOffice.Common
         private void PreviousIndex()
         {
             if (--_currentIndex >= 0) return;
-            
+
             PreviousArray();
             _currentIndex = _undoSteps - 1;
         }
@@ -124,7 +136,38 @@ namespace SharpOffice.Common
 
         public int StepsLeft { get { return _stepsLeft; } }
 
-        public int RedoStepsLeft { get { return _currentRedoIndex;} }
+        public int RedoStepsLeft { get { return _currentRedoIndex; } }
+
+        /// <summary>
+        /// Send commands to ICommandExecutor.
+        /// </summary>
+        public void ApplyChanges()
+        {
+            ApplyChanges(_currentIndex, _currentArray, _stepsLeft, reverse: true);
+        }
+
+        private void ApplyChanges(int startIndex, int startArray, int count, bool reverse = false,
+            bool ignoreNoCommandExecutor = false)
+        {
+            if (_commandExecutor == null)
+            {
+                if (ignoreNoCommandExecutor)
+                    return;
+                throw new InvalidOperationException("This UndoStack hasn't been initialized with an ICommandExecutor.",
+                    new NullReferenceException());
+            }
+
+            Func<int, int, int> change = (value, modifier) => reverse ? value + modifier : value - modifier;
+
+            var currentIndex = startIndex;
+            var currentArray = startArray;
+            for (int i = 0; i < count; i++)
+            {
+                _commandExecutor.ApplyCommand(_stack[currentArray][currentIndex]);
+                currentIndex = currentIndex == _undoSteps ? 0 : change(currentIndex, 1);
+                currentArray = currentIndex == 0 ? change(currentArray, 1) : currentArray;
+            }
+        }
     }
 
     [Serializable]

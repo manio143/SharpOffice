@@ -45,6 +45,8 @@
     <Compile Include="Attributes\PluginAssemblyAttribute.cs" />
     <Compile Include="Attributes\WindowAttribute.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandExecutor.cs" />
+    <Compile Include="Commands\IUndoStack.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="ContainerWrapper.cs" />
     <Compile Include="Data\IAttribute.cs" />
