@@ -57,12 +57,18 @@ namespace SharpOffice.Core
             _container.Register(typeof(IApplication), applicationType);
         }
 
+        /// <summary>
+        /// Get all assemblies that are not Core and are either Applications or Plugins.
+        /// </summary>
+        /// <returns>Array of such assemblies.</returns>
         private static Assembly[] GetAssemblies()
         {
             string path = Environment.CurrentDirectory;
             string[] assemblyFiles = Directory.GetFiles(path, "*.DLL");
             return assemblyFiles.Select(Assembly.LoadFrom)
-                .Where(assembly => !assembly.GetCustomAttributes<CoreAssemblyAttribute>().Any())
+                .Where(assembly => assembly.GetCustomAttribute<CoreAssemblyAttribute>() == null
+                                    && (assembly.GetCustomAttribute<ApplicationAssemblyAttribute>() != null
+                                        || assembly.GetCustomAttribute<PluginAssemblyAttribute>() != null))
                 .ToArray();
         }
 

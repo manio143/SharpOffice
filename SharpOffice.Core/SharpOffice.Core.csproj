@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ApplicationAssemblyAttribute.cs" />
     <Compile Include="Attributes\ApplicationAttribute.cs" />
     <Compile Include="Attributes\CoreAssemblyAttribute.cs" />
+    <Compile Include="Attributes\PluginAssemblyAttribute.cs" />
     <Compile Include="Attributes\WindowAttribute.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
