@@ -5,5 +5,6 @@ namespace SharpOffice.Core.Commands
     public interface ICommand
     {
         IData Execute(IData data);
+        IData Reverse(IData data);
     }
 }
