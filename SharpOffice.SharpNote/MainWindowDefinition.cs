@@ -6,15 +6,17 @@ namespace SharpOffice.SharpNote
     [Window(WindowType.MainWindow)]
     public class MainWindowDefinition : IWindowDefinition
     {
+        private readonly MainWindow _mainWindow;
+        public Xwt.Window Window { get { return _mainWindow; } }
 
-        public Xwt.Window Window
+        public MainWindowDefinition()
         {
-            get { throw new System.NotImplementedException(); }
+            _mainWindow = new MainWindow();
         }
 
         public void Configure(Core.Configuration.IConfiguration configuration)
         {
-            throw new System.NotImplementedException();
+            //TODO: Setup _mainWindow
         }
     }
 }

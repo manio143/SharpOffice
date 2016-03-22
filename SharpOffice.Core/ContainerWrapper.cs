@@ -30,7 +30,7 @@ namespace SharpOffice.Core
             Assembly[] assemblies = GetAssemblies();
             foreach (var assembly in assemblies)
             {
-                if (assembly.FullName == applicationAssemblyName)
+                if (assembly.GetName().Name == applicationAssemblyName)
                 {
                     RegisterApplication(assembly);
                     RegisterMainWindow(assembly);
@@ -43,7 +43,11 @@ namespace SharpOffice.Core
         {
             Type mainWindowDefinitionType =
                 assembly.GetTypes()
-                    .First(t => t.GetCustomAttribute<WindowAttribute>().WindowType == WindowType.MainWindow);
+                    .First(t =>
+                    {
+                        var attribute = t.GetCustomAttribute<WindowAttribute>();
+                        return attribute != null && attribute.WindowType == WindowType.MainWindow;
+                    });
             Type iWindowDefinition =
                 Assembly.Load(new AssemblyName("SharpOffice.Window"))
                     .GetTypes()
