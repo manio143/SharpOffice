@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using DryIoc;
 using SharpOffice.Core.Attributes;
+using SharpOffice.Core.Configuration;
 
 namespace SharpOffice.Core
 {
@@ -37,6 +38,15 @@ namespace SharpOffice.Core
                 }
                 //TODO: register types that may be plugged in (like file formats, data formats, etc.)
             }
+            RegisterConfigurationProvider();
+        }
+
+        private static void RegisterConfigurationProvider()
+        {
+            Type configurationProvider = Assembly.Load(new AssemblyName("SharpOffice.Common"))
+                .GetTypes()
+                .First(t => t.Name == "ConfigurationProvider");
+            _container.Register(typeof(IConfigurationProvider), configurationProvider, Reuse.Singleton);
         }
 
         private static void RegisterMainWindow(Assembly assembly)

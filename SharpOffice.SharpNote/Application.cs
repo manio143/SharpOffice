@@ -1,4 +1,7 @@
-﻿using SharpOffice.Core;
+﻿using SharpOffice.Common.Configuration;
+using SharpOffice.Core;
+using SharpOffice.Core.Formats;
+using DryIoc;
 
 namespace SharpOffice.SharpNote
 {
@@ -11,7 +14,7 @@ namespace SharpOffice.SharpNote
 
         public void RegisterCustomTypes(DryIoc.Container container)
         {
-            
+            container.Register<IConfigurationFormat, YamlConfigurationFormat>();
         }
     }
 }

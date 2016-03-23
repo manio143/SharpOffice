@@ -62,7 +62,8 @@ namespace SharpOffice
         private static IWindowDefinition GetWindowDefinition(Container container)
         {
             var windowDefinition = container.Resolve<IWindowDefinition>(serviceKey: "MainWindow");
-            windowDefinition.Configure(container.Resolve<IConfiguration>(serviceKey: "MainWindowConfiguration"));
+            var configProvider = container.Resolve<IConfigurationProvider>();
+            windowDefinition.Configure(configProvider);
             return windowDefinition;
         }
     }

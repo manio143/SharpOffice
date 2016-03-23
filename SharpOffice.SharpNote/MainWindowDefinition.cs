@@ -14,7 +14,7 @@ namespace SharpOffice.SharpNote
             _mainWindow = new MainWindow();
         }
 
-        public void Configure(Core.Configuration.IConfiguration configuration)
+        public void Configure(Core.Configuration.IConfigurationProvider configurationProvider)
         {
             //TODO: Setup _mainWindow
         }
