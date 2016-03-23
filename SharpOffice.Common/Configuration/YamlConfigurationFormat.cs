@@ -25,5 +25,14 @@ namespace SharpOffice.Common.Configuration
                     "The YamlConfigurationFormat doesn't support IConfiguration classes that do not derive from PropertyBasedConfiguration.");
             return new Deserializer().Deserialize<T>(new StreamReader(stream));
         }
+
+        public IConfiguration ReadConfiguration(Type configurationType, Stream stream)
+        {
+            return (IConfiguration)
+                GetType()
+                .GetMethod("ReadConfiguration", new[] { typeof(Stream) })
+                .MakeGenericMethod(configurationType)
+                .Invoke(this, new[] { stream });
+        }
     }
 }

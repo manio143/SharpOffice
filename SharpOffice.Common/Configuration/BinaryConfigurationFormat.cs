@@ -37,5 +37,15 @@ namespace SharpOffice.Common.Configuration
                 config.SetProperty(keyValuePair.Key, keyValuePair.Value);
             return config;
         }
+
+
+        public IConfiguration ReadConfiguration(System.Type configurationType, Stream stream)
+        {
+            return (IConfiguration)
+                GetType()
+                .GetMethod("ReadConfiguration", new[] {typeof (Stream)})
+                .MakeGenericMethod(configurationType)
+                .Invoke(this, new[] {stream});
+        }
     }
 }
