@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Commands\ChainCommand.cs" />
     <Compile Include="Configuration\BinaryConfigurationFormat.cs" />
+    <Compile Include="Configuration\ConfigurationProvider.cs" />
     <Compile Include="Configuration\PropertyBasedConfiguration.cs" />
     <Compile Include="Configuration\YamlConfigurationFormat.cs" />
     <Compile Include="Data\PlainTextNode.cs" />
