@@ -47,7 +47,10 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandExecutor.cs" />
     <Compile Include="Commands\IUndoStack.cs" />
+    <Compile Include="Configuration\ConfigurationFormatAttribute.cs" />
+    <Compile Include="Configuration\ConfigurationSourceAttribute.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
     <Compile Include="ContainerWrapper.cs" />
     <Compile Include="Data\IAttribute.cs" />
     <Compile Include="Data\IData.cs" />
