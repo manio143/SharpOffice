@@ -9,8 +9,6 @@
 
         ICommand Peek();
 
-        void ApplyChanges();
-
         int StepsLeft { get; }
         int RedoStepsLeft { get; }
     }
