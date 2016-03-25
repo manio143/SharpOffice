@@ -23,11 +23,13 @@ namespace SharpOffice.Common.Configuration
 
         private void LoadAll()
         {
-            foreach (var configuration in _configurations)
+            for (int i = 0; i < _configurations.Count; i++)
             {
+                var configuration = _configurations[i];
                 var fileName = GetFileName(configuration);
                 var format = GetFormat(configuration);
-                format.ReadConfiguration(configuration.GetType(), File.OpenRead(fileName));
+                if (File.Exists(fileName))
+                    _configurations[i] = format.ReadConfiguration(configuration.GetType(), File.OpenRead(fileName));
             }
         }
 

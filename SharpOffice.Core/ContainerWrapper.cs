@@ -36,9 +36,17 @@ namespace SharpOffice.Core
                     RegisterApplication(assembly);
                     RegisterMainWindow(assembly);
                 }
+                RegisterConfigurations(assembly);
                 //TODO: register types that may be plugged in (like file formats, data formats, etc.)
             }
             RegisterConfigurationProvider();
+        }
+
+        private static void RegisterConfigurations(Assembly assembly)
+        {
+            var configurations = assembly.GetTypes().Where(t => typeof (IConfiguration).IsAssignableFrom(t));
+            foreach (var type in configurations)
+            _container.Register(typeof(IConfiguration), type);
         }
 
         private static void RegisterConfigurationProvider()
