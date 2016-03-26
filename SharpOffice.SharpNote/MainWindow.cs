@@ -10,7 +10,7 @@ namespace SharpOffice.SharpNote
         public MainWindow()
         {
             //DEMO
-            Title = "Xwt Demo Application";
+            Title = "SharpNote (alpha)";
             Width = 500;
             Height = 400;
             Closed += (sender, args) => Xwt.Application.Exit();
@@ -24,7 +24,7 @@ namespace SharpOffice.SharpNote
 
             var menuFile = MenuHelper.CreateMenuItem("_File", subMenu: new[]
             {
-             MenuHelper.CreateMenuItem("_New", subMenu: new []
+             MenuHelper.CreateMenuItem("_New", subMenu: new[]
              {
                  MenuHelper.CreateMenuItem("_Source file", command: null),
                  MenuHelper.CreateMenuItem("_Note", command: null)

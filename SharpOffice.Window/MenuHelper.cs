@@ -19,9 +19,7 @@ namespace SharpOffice.Window
         {
             var menu = new Menu();
             foreach (var menuItem in subMenu)
-            {
                 menu.Items.Add(menuItem);
-            }
             return menu;
         }
     }
