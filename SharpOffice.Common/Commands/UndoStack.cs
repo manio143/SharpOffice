@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using SharpOffice.Core.Commands;
 
@@ -9,21 +10,8 @@ namespace SharpOffice.Common.Commands
     /// </summary>
     public class UndoStack : IUndoStack
     {
-        private readonly ICommand[][] _stack;
-        private readonly ICommand[] _redoStack;
-        private readonly int _undoSteps;
-        private int _currentArray;
-        private int _currentIndex;
-        private int _currentRedoIndex;
-        private int _stepsLeft;
-
-        public UndoStack(int undoSteps)
-        {
-            _undoSteps = undoSteps;
-            _stack = new ICommand[2][];
-            _stack[0] = new ICommand[_undoSteps];
-            _redoStack = new ICommand[_undoSteps];
-        }
+        private readonly Stack<ICommand> _undoStack = new Stack<ICommand>();
+        private readonly Stack<ICommand> _redoStack = new Stack<ICommand>();
 
         /// <summary>
         /// Add a new command to the stack.
@@ -31,32 +19,11 @@ namespace SharpOffice.Common.Commands
         /// <param name="cmd"></param>
         public void Insert(ICommand cmd)
         {
-            NextIndex();
-            IncreaseStepsLeft();
-            _stack[_currentArray][_currentIndex] = cmd;
-            _currentRedoIndex = 0;
-        }
+            if(cmd == null)
+                throw new ArgumentNullException("cmd");
 
-        private void IncreaseStepsLeft()
-        {
-            _stepsLeft += _stepsLeft < _undoSteps ? 1 : 0;
-        }
-
-        private void NextIndex()
-        {
-            if (++_currentIndex < _undoSteps) return;
-
-            NextArray();
-            _currentIndex = 0;
-        }
-
-        private void NextArray()
-        {
-            if (_currentArray == 1)
-                _stack[0] = _stack[1];
-            else
-                _currentArray = 1;
-            _stack[1] = new ICommand[_undoSteps];
+            _undoStack.Push(cmd);
+            _redoStack.Clear();
         }
 
         /// <summary>
@@ -65,69 +32,53 @@ namespace SharpOffice.Common.Commands
         /// <returns></returns>
         public ICommand Undo()
         {
-            ThrowIfEmpty();
-            var cmd = _stack[_currentArray][_currentIndex];
-            InsertRedo(cmd);
-            PreviousIndex();
-            _stepsLeft--;
+            ThrowIfEmpty(_undoStack);
+
+            var cmd = _undoStack.Pop();
+            _redoStack.Push(cmd);
+
             return cmd;
         }
 
-        private void ThrowIfEmpty()
+        private void ThrowIfEmpty(Stack<ICommand> stack)
         {
-            if (_stepsLeft == 0)
-                throw new EmptyStackException();
+            if (stack.Count == 0)
+                throw new EmptyStackException(String.Format("{0} is empty.", stack == _undoStack ? "UndoStack" : "RedoStack"));
         }
-
-        private void InsertRedo(ICommand cmd)
-        {
-            _redoStack[_currentRedoIndex++] = cmd;
-        }
-
-        private void PreviousIndex()
-        {
-            if (--_currentIndex >= 0) return;
-
-            PreviousArray();
-            _currentIndex = _undoSteps - 1;
-        }
-
-        private void PreviousArray()
-        {
-            if (_currentArray == 0)
-                throw new EmptyStackException();
-            _currentArray--;
-        }
-
+        
         /// <summary>
         /// Retrieve the last command from the stack without removing it.
         /// </summary>
         /// <returns></returns>
         public ICommand Peek()
         {
-            return _stack[_currentArray][_currentIndex];
+            ThrowIfEmpty(_undoStack);
+            return _undoStack.Peek();
         }
 
         /// <summary>
-        /// 
+        /// Pushes last Undone command back to the UndoStack.
         /// </summary>
         /// <returns></returns>
         public ICommand Redo()
         {
-            if (--_currentRedoIndex < 0)
-                throw new InvalidOperationException("Nothing to redo.");
-
-            var cmd = _redoStack[_currentRedoIndex];
-            NextIndex();
-            _stepsLeft++;
+            ThrowIfEmpty(_redoStack);
+            
+            var cmd = _redoStack.Pop();
+            _undoStack.Push(cmd);
 
             return cmd;
         }
 
-        public int StepsLeft { get { return _stepsLeft; } }
+        public int StepsLeft { get { return _undoStack.Count; } }
 
-        public int RedoStepsLeft { get { return _currentRedoIndex; } }
+        public int RedoStepsLeft { get { return _redoStack.Count; } }
 
+        public void Clear()
+        {
+            _undoStack.Clear();
+            _redoStack.Clear();
+        }
     }
 
     [Serializable]

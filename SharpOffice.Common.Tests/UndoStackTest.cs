@@ -19,7 +19,7 @@ namespace SharpOffice.Common.Tests
         [TestMethod]
         public void CreationTest()
         {
-            _undoStack = new UndoStack(10);
+            _undoStack = new UndoStack();
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace SharpOffice.Common.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(EmptyStackException))]
         public void ThrowOnEmptyRedoTest()
         {
             BasicRedoTest();
@@ -68,22 +68,6 @@ namespace SharpOffice.Common.Tests
             var u2cmd = _undoStack.Undo();
             Assert.AreEqual(ucmd, rcmd);
             Assert.AreEqual(u2cmd, ucmd);
-        }
-
-        [TestMethod]
-        public void ArrayChangeTest()
-        {
-            CreationTest();
-            for (int i = 0; i < 11; i++)
-                _undoStack.Insert(GetMockObject());
-            
-            Assert.AreEqual(10, _undoStack.StepsLeft);
-
-            for (int i = 0; i < 10; i++)
-                _undoStack.Insert(GetMockObject());
-            
-            for (int i = 0; i < 10; i++)
-                _undoStack.Undo();
         }
     }
 }
