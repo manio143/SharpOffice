@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SharpOffice.Core.Configuration;
 
 namespace SharpOffice.Common.Tests.Configuration
 {
-    [TestClass]
+    [TestFixture]
     public class PropertyBasedConfigurationTest
     {
         private IConfiguration config;
         readonly bool[] arr = { true, false, true };
 
-        [TestMethod]
+        [Test]
         public void CreationTest()
         {
             config = new TestPropertyBasedConfiguration();
         }
 
-        [TestMethod]
+        [Test]
         public void SetTest()
         {
             CreationTest();
@@ -27,7 +27,7 @@ namespace SharpOffice.Common.Tests.Configuration
             config.SetProperty("Bits", arr);
         }
 
-        [TestMethod]
+        [Test]
         public void GetTest()
         {
             SetTest();
@@ -40,32 +40,29 @@ namespace SharpOffice.Common.Tests.Configuration
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
+        [Test]
         public void InvalidGetNullCastTest()
         {
             CreationTest();
-            config.GetProperty<int>("Text");
+            Assert.Throws<InvalidCastException>(delegate { config.GetProperty<int>("Text"); });
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
+        [Test]
         public void InvalidGetCastTest()
         {
             CreationTest();
             SetTest();
-            config.GetProperty<int>("Text");
+            Assert.Throws<InvalidCastException>(delegate { config.GetProperty<int>("Text"); });
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
+        [Test]
         public void InvalidSetCastTest()
         {
             CreationTest();
-            config.SetProperty("Text", 5);
+            Assert.Throws<InvalidCastException>(delegate { config.SetProperty("Text", 5); });
         }
 
-        [TestMethod]
+        [Test]
         public void GetAllPropertiesTest()
         {
             CreationTest();

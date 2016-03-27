@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Moq;
+using NUnit.Framework;
 using SharpOffice.Common.Commands;
 using SharpOffice.Core.Commands;
 
 namespace SharpOffice.Common.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class UndoStackTest
     {
         private UndoStack _undoStack;
@@ -16,50 +15,48 @@ namespace SharpOffice.Common.Tests
             return new Mock<ICommand>().Object;
         }
 
-        [TestMethod]
+        [Test]
         public void CreationTest()
         {
             _undoStack = new UndoStack();
         }
 
-        [TestMethod]
+        [Test]
         public void BasicInsertTest()
         {
             CreationTest();
             _undoStack.Insert(GetMockObject());
         }
 
-        [TestMethod]
+        [Test]
         public void BasicUndoTest()
         {
             BasicInsertTest();
             _undoStack.Undo();
         }
 
-        [TestMethod]
+        [Test]
         public void BasicRedoTest()
         {
             BasicUndoTest();
             _undoStack.Redo();
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(EmptyStackException))]
+        [Test]
         public void ThrowOnEmptyStackTest()
         {
             BasicUndoTest();
-            _undoStack.Undo();
+            Assert.Throws<EmptyStackException>(delegate { _undoStack.Undo(); });
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(EmptyStackException))]
+        [Test]
         public void ThrowOnEmptyRedoTest()
         {
             BasicRedoTest();
-            _undoStack.Redo();
+            Assert.Throws<EmptyStackException>(delegate { _undoStack.Redo(); });
         }
 
-        [TestMethod]
+        [Test]
         public void UndoRedoUndoTest()
         {
             BasicInsertTest();

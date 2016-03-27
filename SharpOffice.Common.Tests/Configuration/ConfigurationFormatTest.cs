@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 using SharpOffice.Common.Configuration;
 using SharpOffice.Core.Configuration;
 using SharpOffice.Core.Formats;
 
 namespace SharpOffice.Common.Tests.Configuration
 {
-    [TestClass]
+    [TestFixture]
     public class ConfigurationFormatTest
     {
         public IConfiguration GetMockConfiguration(IEnumerable<KeyValuePair<string, object>> testData)
@@ -39,7 +39,7 @@ namespace SharpOffice.Common.Tests.Configuration
                         Assert.IsTrue(Has((IEnumerable) pair.Value, obj));
         }
 
-        [TestMethod]
+        [Test]
         public void BinaryConfigurationFormatTest_WithMock()
         {
             ReadWriteInMemoryStreamTest<BinaryConfigurationFormat, TestConfiguration>(
@@ -47,7 +47,7 @@ namespace SharpOffice.Common.Tests.Configuration
                     new Dictionary<string, object> { { "int", 16 }, { "float", 3.2f } }));
         }
         
-        [TestMethod]
+        [Test]
         public void BinaryConfigurationFormatTest_WithPropertyBasedConfiguration()
         {
             ReadWriteInMemoryStreamTest<BinaryConfigurationFormat, TestPropertyBasedConfiguration>(
@@ -59,7 +59,7 @@ namespace SharpOffice.Common.Tests.Configuration
                 });
         }
 
-        [TestMethod]
+        [Test]
         public void YamlConfigurationFormatTest()
         {
             var config = new TestPropertyBasedConfiguration();
