@@ -65,10 +65,12 @@
     <Compile Include="Formats\IFileFormat.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Window\Menu\IMenuComposer.cs" />
     <Compile Include="Window\Menu\Menu.cs" />
     <Compile Include="Window\Menu\IMenuElement.cs" />
     <Compile Include="Window\Menu\IMenuProvider.cs" />
     <Compile Include="Window\Menu\MenuSeparator.cs" />
+    <Compile Include="Window\Menu\SingleMenuItem.cs" />
     <Compile Include="Window\Menu\TopLevelMenuAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
