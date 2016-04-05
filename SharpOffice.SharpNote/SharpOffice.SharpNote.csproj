@@ -41,8 +41,12 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Configuration\MainWindowConfiguration.cs" />
-    <Compile Include="MainWindow.cs" />
-    <Compile Include="MainWindowDefinition.cs" />
+    <Compile Include="Menus\FileMenu.cs" />
+    <Compile Include="Menus\MenuComposer.cs" />
+    <Compile Include="Menus\NewFileMenuElement.cs" />
+    <Compile Include="Menus\NewNoteMenuElement.cs" />
+    <Compile Include="Menus\NewSubMenu.cs" />
+    <Compile Include="Menus\OpenMenuElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
