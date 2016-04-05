@@ -71,6 +71,7 @@
     <Compile Include="Window\Menu\IMenuProvider.cs" />
     <Compile Include="Window\Menu\MenuSeparator.cs" />
     <Compile Include="Window\Menu\SingleMenuItem.cs" />
+    <Compile Include="Window\Menu\SubMenuItem.cs" />
     <Compile Include="Window\Menu\TopLevelMenuAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
