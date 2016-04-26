@@ -22,12 +22,12 @@ namespace SharpOffice.SharpNote.Menus
                 new NewNoteMenuElement()
             });
 
-            var open = new OpenMenuElement();
-
             file.SubMenu.AddMultiple(new IMenuElement[]
             {
                 newMenu,
-                open
+                new OpenMenuElement(),
+                new MenuSeparator(), 
+                new ExitMenuElement()
             });
         }
     }

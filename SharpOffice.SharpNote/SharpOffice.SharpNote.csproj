@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Configuration\MainWindowConfiguration.cs" />
+    <Compile Include="Menus\ExitMenuElement.cs" />
     <Compile Include="Menus\FileMenu.cs" />
     <Compile Include="Menus\MenuComposer.cs" />
     <Compile Include="Menus\NewFileMenuElement.cs" />
