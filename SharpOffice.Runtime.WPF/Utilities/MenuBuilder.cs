@@ -41,7 +41,7 @@ namespace SharpOffice.Window.Runtime.WPF.Utilities
                 if (menuElement.SubMenu != null)
                     WalkMenuTree(menuItem.Items, menuElement.SubMenu.Items, CreateNewMenuItem);
                 else
-                    menuItem.Command = new Command(menuElement.Command, menuItem);
+                    menuItem.Click += menuElement.Command;
                 menu.Add(menuItem);
             }
         }
