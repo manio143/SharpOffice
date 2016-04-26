@@ -49,6 +49,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utilities\Command.cs" />
+    <Compile Include="Utilities\IconFactory.cs" />
+    <Compile Include="Utilities\MenuBuilder.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
