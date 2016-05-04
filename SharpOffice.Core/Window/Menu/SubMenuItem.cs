@@ -27,7 +27,6 @@ namespace SharpOffice.Core.Window
 
         public void Command(object sender, EventArgs args)
         {
-            throw new InvalidOperationException();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

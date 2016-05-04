@@ -12,7 +12,6 @@ namespace SharpOffice.SharpNote.Menus
 
         public void Command(object sender, EventArgs args)
         {
-            throw new NotImplementedException();
         }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
