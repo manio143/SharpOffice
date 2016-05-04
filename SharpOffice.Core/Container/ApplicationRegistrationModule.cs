@@ -11,7 +11,7 @@ namespace SharpOffice.Core.Container
 
         public ApplicationRegistrationModule(Assembly applicationAssembly)
         {
-            _applicationType = applicationAssembly.GetTypes().First(t => typeof(IApplication).IsAssignableFrom(t));
+            _applicationType = applicationAssembly.GetTypes().First(t => typeof(IApplication).IsAssignableFrom(t) && t.IsClass);
         }
 
         public void Register(DryIoc.Container container)

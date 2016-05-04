@@ -16,13 +16,13 @@ namespace SharpOffice.Core.Container
             _configurations = new List<Type>();
 
             foreach (var assembly in assemblies)
-                _configurations.AddRange(assembly.GetTypes().Where(t => typeof (IConfiguration).IsAssignableFrom(t)));
+                _configurations.AddRange(assembly.GetTypes().Where(t => typeof(IConfiguration).IsAssignableFrom(t) && t.IsClass));
         }
 
         public void Register(DryIoc.Container container)
         {
             foreach (var configuration in _configurations)
-                container.Register(typeof (IConfiguration), configuration);
+                container.Register(typeof(IConfiguration), configuration);
         }
     }
 }

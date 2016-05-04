@@ -16,7 +16,7 @@ namespace SharpOffice.Core.Container
             _composers = new List<Type>();
 
             foreach (var assembly in assemblies)
-                _composers.AddRange(assembly.GetTypes().Where(t => typeof(IMenuComposer).IsAssignableFrom(t)));
+                _composers.AddRange(assembly.GetTypes().Where(t => typeof(IMenuComposer).IsAssignableFrom(t) && t.IsClass));
         }
 
         public void Register(DryIoc.Container container)

@@ -32,7 +32,7 @@ namespace SharpOffice.Core.Container
 
             List<IRegistrationModule> modules = new List<IRegistrationModule>();
             foreach (var assembly in assemblies.Concat(new[] {typeof (IRegistrationModule).Assembly})) //include SharpOffice.Core
-                foreach (var type in assembly.GetTypes().Where(t => typeof (IRegistrationModule).IsAssignableFrom(t)))
+                foreach (var type in assembly.GetTypes().Where(t => typeof (IRegistrationModule).IsAssignableFrom(t) && t.IsClass))
                 {
                     IRegistrationModule module;
                     var noParams = type.GetConstructor(new Type[0]);
