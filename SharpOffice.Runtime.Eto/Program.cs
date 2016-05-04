@@ -2,6 +2,7 @@
 using DryIoc;
 using Eto.Forms;
 using SharpOffice.Core;
+using SharpOffice.Core.Window;
 using Container = DryIoc.Container;
 
 namespace SharpOffice.Runtime.Eto
@@ -19,8 +20,14 @@ namespace SharpOffice.Runtime.Eto
             ContainerWrapper.Initialize(args[0]); //args[0] = applicationAssemblyName
             var container = ContainerWrapper.GetContainer();
             var app = InitializeApplication(container);
+            var menuProvider = container.Resolve<IMenuProvider>();
 
-            new Application().Run(new MainWindow(app));
+            var etoApplication = new Application();
+
+            var window = new MainWindow(app, menuProvider);
+            window.Initialize();
+
+            etoApplication.Run(window);
 
             ContainerWrapper.Dispose();
             return 0;

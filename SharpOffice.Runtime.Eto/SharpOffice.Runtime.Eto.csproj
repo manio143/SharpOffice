@@ -49,6 +49,7 @@
     <Compile Include="MainWindow.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\MenuBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
