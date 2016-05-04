@@ -1,33 +1,42 @@
 # SharpOffice #
 The purpose of this project is to create a cross-platform open-source Office suite written in C#. The idea is that it should be very modularized for easy plugin creation. Each application will be just a library that when plugged into the runtime will display all necessary features for the program while using the common code base.
 
+Status: [![Build status](https://ci.appveyor.com/api/projects/status/qebehe9amlk2jt4c/branch/master?svg=true)](https://ci.appveyor.com/project/manio143/sharpoffice/branch/master)
+
 I will comment my progress on my blog http://md-techblog.net.pl [Polish]
 
 The suite will be divided into several applications:
-* __SharpNotepad__ (for code and quicknotes)
+* __SharpNote__ (for code and quicknotes)
 * __SharpWriter__ (text document editing)
 * __SharpCalc__ (calculation sheet editing)
 * __SharpPresent__ (presentation editing)
 
-The project is using Xwt for GUI rendering. On each platform it will use native solutions (WPF on Windows, GTK# on Linux, Cocoa on Mac). Because Visual Studio doesn't support nested solutions I referenced the libraries by path.
-
 ### Modules ###
+
 #### SharpOffice.Core ####
 Core library which holds interfaces for editing logic and plugin support.
-#### SharpOffice.Common ####
-The common implementations of Core interfaces.
-#### SharpOffice.Window ####
-This library defines objects that will construct the applications
-#### SharpOffice.Window.Runtime ####
-This is the main application which given a set of libraries will create a window with all necessary controls and behaviours.
+As well as the common implementations of core interfaces.
+
+#### SharpOffice.Runtime.* ####
+Executables that discover application modules and plugins, and based on certain implementations and definitions generate GUI.
+
+#### SharpOffice._Application_ ####
+Assemblies that define applications via controls set, behaviours, etc.
 
 ### Building ###
 
-	$ git submodule init
-	$ sit submodule update
-	$ msbuild Xwt/Xwt.sln	# xbuild on mono
-	$ nuget restore		# you'll have to provide path/to/nuget.exe
-				# on mono use `mono nuget.exe restore`
-	$ msbuild 
+	git clone https://github.com/manio143/SharpOffice
+	cd SharpOffice
+	nuget restore
+	msbuild 
 
-Right now the build produces some errors on Mono, I may have to change my testing framework, as well as some other references.
+### Running ###
+To run an application you have to copy its libraries into the output folder of a desired runtime. So for example
+
+	cp SharpOffice.SharpNote/bin/Debug/SharpOffice.SharpNote.dll SharpOffice.Runtime.Eto/bin/Debug
+
+And then you go to the destination folder and run
+
+	SharpOffice.Runtime.Eto.exe SharpOffice.SharpNote
+
+Where the argument is the assembly name of the application assembly.
