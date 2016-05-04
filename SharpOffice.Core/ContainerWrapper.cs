@@ -6,6 +6,7 @@ using System.Reflection;
 using DryIoc;
 using SharpOffice.Core.Attributes;
 using SharpOffice.Core.Configuration;
+using SharpOffice.Core.Window;
 
 namespace SharpOffice.Core
 {
@@ -29,48 +30,59 @@ namespace SharpOffice.Core
         private static void AutoRegister(string applicationAssemblyName)
         {
             Assembly[] assemblies = GetAssemblies();
+            
+            RegisterProviders();
+
             foreach (var assembly in assemblies)
             {
                 if (assembly.GetName().Name == applicationAssemblyName)
-                {
                     RegisterApplication(assembly);
-                    RegisterMainWindow(assembly);
-                }
+
                 RegisterConfigurations(assembly);
+                RegisterMenus(assembly);
                 //TODO: register types that may be plugged in (like file formats, data formats, etc.)
             }
-            RegisterConfigurationProvider();
+        }
+
+        private static void RegisterMenus(Assembly assembly)
+        {
+            var menuProvider = _container.Resolve<IMenuProvider>();
+            var menuComposers = assembly.GetTypes().Where(t => typeof (IMenuComposer).IsAssignableFrom(t));
+            foreach (var menuComposerType in menuComposers)
+            {
+                var menuComposer = (IMenuComposer) menuComposerType.GetConstructor(new Type[0]).Invoke(new object[0]);
+                menuComposer.Setup(menuProvider);
+            }
         }
 
         private static void RegisterConfigurations(Assembly assembly)
         {
-            var configurations = assembly.GetTypes().Where(t => typeof (IConfiguration).IsAssignableFrom(t));
+            var configurations = assembly.GetTypes().Where(t => typeof(IConfiguration).IsAssignableFrom(t));
             foreach (var type in configurations)
-            _container.Register(typeof(IConfiguration), type);
+                _container.Register(typeof(IConfiguration), type);
         }
 
-        private static void RegisterConfigurationProvider()
+        private static void RegisterProviders()
         {
-            Type configurationProvider = Assembly.Load(new AssemblyName("SharpOffice.Common"))
+            var commonAssembly = Assembly.Load(new AssemblyName("SharpOffice.Common"));
+            RegisterConfigurationProvider(commonAssembly);
+            RegisterMenuProvider(commonAssembly);
+        }
+
+        private static void RegisterConfigurationProvider(Assembly commonAssembly)
+        {
+            Type configurationProvider = commonAssembly
                 .GetTypes()
                 .First(t => t.Name == "ConfigurationProvider");
             _container.Register(typeof(IConfigurationProvider), configurationProvider, Reuse.Singleton);
         }
 
-        private static void RegisterMainWindow(Assembly assembly)
+        private static void RegisterMenuProvider(Assembly commonAssembly)
         {
-            Type mainWindowDefinitionType =
-                assembly.GetTypes()
-                    .First(t =>
-                    {
-                        var attribute = t.GetCustomAttribute<WindowAttribute>();
-                        return attribute != null && attribute.WindowType == WindowType.MainWindow;
-                    });
-            Type iWindowDefinition =
-                Assembly.Load(new AssemblyName("SharpOffice.Window"))
-                    .GetTypes()
-                    .First(t => t.Name == "IWindowDefinition");
-            _container.Register(iWindowDefinition, mainWindowDefinitionType, serviceKey: "MainWindow");
+            Type menuProvider = commonAssembly
+                .GetTypes()
+                .First(t => t.Name == "MenuProvider");
+            _container.Register(typeof(IMenuProvider), menuProvider, Reuse.Singleton);
         }
 
         private static void RegisterApplication(Assembly assembly)
@@ -87,11 +99,23 @@ namespace SharpOffice.Core
         {
             string path = Environment.CurrentDirectory;
             string[] assemblyFiles = Directory.GetFiles(path, "*.DLL");
-            return assemblyFiles.Select(Assembly.LoadFrom)
-                .Where(assembly => assembly.GetCustomAttribute<CoreAssemblyAttribute>() == null
-                                    && (assembly.GetCustomAttribute<ApplicationAssemblyAttribute>() != null
-                                        || assembly.GetCustomAttribute<PluginAssemblyAttribute>() != null))
-                .ToArray();
+            List<Assembly> list = new List<Assembly>();
+            foreach (var assemblyFile in assemblyFiles)
+            {
+                try
+                {
+                    var assembly = Assembly.LoadFrom(assemblyFile);
+                    if (assembly.GetCustomAttribute<CoreAssemblyAttribute>() == null &&
+                        (assembly.GetCustomAttribute<ApplicationAssemblyAttribute>() != null ||
+                         assembly.GetCustomAttribute<PluginAssemblyAttribute>() != null))
+                        list.Add(assembly);
+                }
+                catch (BadImageFormatException)
+                {
+                    continue;
+                }
+            }
+            return list.ToArray();
         }
 
         public static void Dispose()
