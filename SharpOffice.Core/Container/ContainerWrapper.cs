@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using SharpOffice.Core.Attributes;
-using SharpOffice.Core.Container;
 
-namespace SharpOffice.Core
+namespace SharpOffice.Core.Container
 {
     /// <summary>
     /// Provides access to the IoC container and registers all neccesary types for the application to run.

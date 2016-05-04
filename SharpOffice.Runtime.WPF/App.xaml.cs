@@ -2,6 +2,7 @@
 using System.Windows;
 using DryIoc;
 using SharpOffice.Core;
+using SharpOffice.Core.Container;
 
 namespace SharpOffice.Window.Runtime.WPF
 {
