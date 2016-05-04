@@ -65,7 +65,13 @@
     <Compile Include="Configuration\ConfigurationSourceAttribute.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
-    <Compile Include="ContainerWrapper.cs" />
+    <Compile Include="Container\ApplicationRegistrationModule.cs" />
+    <Compile Include="Container\ConfigurationProviderRegistrationModule.cs" />
+    <Compile Include="Container\ConfigurationsRegistrationModule.cs" />
+    <Compile Include="Container\ContainerWrapper.cs" />
+    <Compile Include="Container\IRegistrationModule.cs" />
+    <Compile Include="Container\MenuComposerRegistrationModule.cs" />
+    <Compile Include="Container\MenuProviderRegistrationModule.cs" />
     <Compile Include="Data\IAttribute.cs" />
     <Compile Include="Data\IData.cs" />
     <Compile Include="Data\IDataConverter.cs" />
