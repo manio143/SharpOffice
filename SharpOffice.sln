@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOffice.SharpNote", "Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOffice.Runtime.WPF", "SharpOffice.Runtime.WPF\SharpOffice.Runtime.WPF.csproj", "{272096D9-219B-4E6E-A6A5-17D323E46115}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOffice.Runtime.Eto", "SharpOffice.Runtime.Eto\SharpOffice.Runtime.Eto.csproj", "{31C04553-DED8-4D51-BAD3-28E889F80A5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{272096D9-219B-4E6E-A6A5-17D323E46115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{272096D9-219B-4E6E-A6A5-17D323E46115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{272096D9-219B-4E6E-A6A5-17D323E46115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31C04553-DED8-4D51-BAD3-28E889F80A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31C04553-DED8-4D51-BAD3-28E889F80A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31C04553-DED8-4D51-BAD3-28E889F80A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31C04553-DED8-4D51-BAD3-28E889F80A5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
