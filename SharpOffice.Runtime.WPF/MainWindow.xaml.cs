@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using DryIoc;
 using SharpOffice.Core;
+using SharpOffice.Core.Container;
 using SharpOffice.Core.Window;
 using SharpOffice.Window.Runtime.WPF.Utilities;
 using WPFMenu = System.Windows.Controls.Menu;

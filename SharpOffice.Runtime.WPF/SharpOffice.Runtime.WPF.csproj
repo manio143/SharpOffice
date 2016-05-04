@@ -96,10 +96,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpOffice.Common\SharpOffice.Common.csproj">
-      <Project>{c90396e2-d806-4dee-aeac-4cb4c6b7aa9d}</Project>
-      <Name>SharpOffice.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharpOffice.Core\SharpOffice.Core.csproj">
       <Project>{42e8084d-feec-42bc-aa00-94a4397b3eb6}</Project>
       <Name>SharpOffice.Core</Name>

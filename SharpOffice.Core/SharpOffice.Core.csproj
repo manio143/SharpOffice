@@ -37,6 +37,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.3.8.0\lib\net35\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ApplicationAssemblyAttribute.cs" />
@@ -46,11 +50,28 @@
     <Compile Include="Attributes\WindowAttribute.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\IUndoStack.cs" />
+    <Compile Include="Common\Commands\ChainCommand.cs" />
+    <Compile Include="Common\Commands\UndoStack.cs" />
+    <Compile Include="Common\Configuration\BinaryConfigurationFormat.cs" />
+    <Compile Include="Common\Configuration\ConfigurationProvider.cs" />
+    <Compile Include="Common\Configuration\PropertyBasedConfiguration.cs" />
+    <Compile Include="Common\Configuration\YamlConfigurationFormat.cs" />
+    <Compile Include="Common\Data\PlainTextNode.cs" />
+    <Compile Include="Common\Data\StringValue.cs" />
+    <Compile Include="Common\Data\TextData.cs" />
+    <Compile Include="Common\IO\File.cs" />
+    <Compile Include="Common\Window\Menu\MenuProvider.cs" />
     <Compile Include="Configuration\ConfigurationFormatAttribute.cs" />
     <Compile Include="Configuration\ConfigurationSourceAttribute.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
-    <Compile Include="ContainerWrapper.cs" />
+    <Compile Include="Container\ApplicationRegistrationModule.cs" />
+    <Compile Include="Container\ConfigurationProviderRegistrationModule.cs" />
+    <Compile Include="Container\ConfigurationsRegistrationModule.cs" />
+    <Compile Include="Container\ContainerWrapper.cs" />
+    <Compile Include="Container\IRegistrationModule.cs" />
+    <Compile Include="Container\MenuComposerRegistrationModule.cs" />
+    <Compile Include="Container\MenuProviderRegistrationModule.cs" />
     <Compile Include="Data\IAttribute.cs" />
     <Compile Include="Data\IData.cs" />
     <Compile Include="Data\IDataConverter.cs" />
