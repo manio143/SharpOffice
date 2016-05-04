@@ -18,18 +18,19 @@ namespace SharpOffice.Runtime.Eto
 
             ContainerWrapper.Initialize(args[0]); //args[0] = applicationAssemblyName
             var container = ContainerWrapper.GetContainer();
-            InitializeApplication(container);
+            var app = InitializeApplication(container);
 
-            new Application().Run(new Dialog(){Title = "First run."});
+            new Application().Run(new MainWindow(app));
 
             ContainerWrapper.Dispose();
             return 0;
         }
 
-        private static void InitializeApplication(Container container)
+        private static IApplication InitializeApplication(Container container)
         {
             var application = container.Resolve<IApplication>();
             application.RegisterCustomTypes(container);
+            return application;
         }
     }
 }
