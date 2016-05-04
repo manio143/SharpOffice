@@ -2,6 +2,7 @@
 using DryIoc;
 using Eto.Forms;
 using SharpOffice.Core;
+using SharpOffice.Core.Container;
 using SharpOffice.Core.Window;
 using Container = DryIoc.Container;
 
