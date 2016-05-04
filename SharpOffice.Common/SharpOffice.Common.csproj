@@ -54,6 +54,7 @@
     <Compile Include="IO\File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\UndoStack.cs" />
+    <Compile Include="Window\Menu\MenuProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpOffice.Core\SharpOffice.Core.csproj">
