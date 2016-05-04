@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 using SharpOffice.Core.Window;
 using WPFMenu = System.Windows.Controls.Menu;
@@ -18,7 +19,6 @@ namespace SharpOffice.Window.Runtime.WPF.Utilities
 
         private void BuildObjectTree()
         {
-            //TODO: walk through MenuElements and generate WPFMenuItems tree
             RootMenu = new WPFMenu();
             WalkMenuTree(RootMenu.Items, _menuProvider.TopLevelMenus, CreateNewMenuItem);
         }
@@ -46,19 +46,18 @@ namespace SharpOffice.Window.Runtime.WPF.Utilities
             }
         }
 
-        public void UpdateMenu()
+        public void WalkMenuTree<T>(ItemCollection menu, IEnumerable<T> elements, Action<T, ItemCollection> action)
+        {
+            foreach (var element in elements)
+            {
+                action(element, menu);
+            }
+        }
+
+        public void BuildMenu()
         {
             if (RootMenu == null)
                 BuildObjectTree();
-            //TODO: update changes in the menu
-        }
-
-        public void WalkMenuTree(ItemCollection menu, IEnumerable<IMenuElement> elements, Action<IMenuElement, ItemCollection> action)
-        {
-            foreach (var menuElement in elements)
-            {
-                action(menuElement, menu);
-            }
         }
     }
 }

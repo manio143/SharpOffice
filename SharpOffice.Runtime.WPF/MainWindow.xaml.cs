@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using DryIoc;
+using SharpOffice.Core;
 using SharpOffice.Core.Window;
 using SharpOffice.Window.Runtime.WPF.Utilities;
 using WPFMenu = System.Windows.Controls.Menu;
@@ -15,6 +17,7 @@ namespace SharpOffice.Window.Runtime.WPF
         public MainWindow()
         {
             InitializeComponent();
+            InitializeMenus(ContainerWrapper.GetContainer().Resolve<IMenuProvider>());
         }
 
         public void InitializeMenus(IMenuProvider menuProvider)
@@ -25,7 +28,7 @@ namespace SharpOffice.Window.Runtime.WPF
 
         public void RenderMenu()
         {
-            _menuBuilder.UpdateMenu();
+            _menuBuilder.BuildMenu();
 
             var rootGrid = (Grid) Content;
             if (!rootGrid.Children.Contains(_menuBuilder.RootMenu))

@@ -4,7 +4,7 @@
     {
         public static object GetIconFromAttribute(object obj)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }
