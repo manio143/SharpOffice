@@ -14,5 +14,7 @@ namespace SharpOffice.SharpNote.Menus
         {
             throw new NotImplementedException();
         }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }

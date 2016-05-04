@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace SharpOffice.Core.Window
 {
@@ -20,5 +21,7 @@ namespace SharpOffice.Core.Window
         public Menu SubMenu { get { return null; } }
 
         public abstract void Command(object sender, EventArgs args);
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace SharpOffice.Core.Window
 {
@@ -29,5 +30,6 @@ namespace SharpOffice.Core.Window
             throw new InvalidOperationException();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+using System.ComponentModel;
 
 namespace SharpOffice.Core.Window
 {
-    public interface IMenuElement
+    public interface IMenuElement : INotifyPropertyChanged
     {
         string Label { get; }
         bool Enabled { get; }
