@@ -1,0 +1,12 @@
+language: csharp
+solution: SharpOffice.sln
+mono:
+  - latest
+  - 4.0.0
+  - 3.12.0
+install:
+  - nuget restore SharpOffice.sln
+  - nuget install NUnit.Runners -Version 3.2.0 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Linux SharpOffice.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.2.0/tools/nunit3-console.exe ./SharpOffice.Common.Tests/bin/Linux/SharpOffice.Common.Tests.dll
