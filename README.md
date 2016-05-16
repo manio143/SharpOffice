@@ -1,7 +1,9 @@
 # SharpOffice #
 The purpose of this project is to create a cross-platform open-source Office suite written in C#. The idea is that it should be very modularized for easy plugin creation. Each application will be just a library that when plugged into the runtime will display all necessary features for the program while using the common code base.
 
-Status: [![Build status](https://ci.appveyor.com/api/projects/status/qebehe9amlk2jt4c/branch/master?svg=true)](https://ci.appveyor.com/project/manio143/sharpoffice/branch/master)
+Windows | Linux
+--------|-------
+[![Build status](https://ci.appveyor.com/api/projects/status/qebehe9amlk2jt4c/branch/master?svg=true)](https://ci.appveyor.com/project/manio143/sharpoffice/branch/master) | [![Build Status](https://travis-ci.org/manio143/SharpOffice.svg?branch=master)](https://travis-ci.org/manio143/SharpOffice)
 
 I will comment my progress on my blog http://md-techblog.net.pl [Polish]
 
