@@ -1,4 +1,5 @@
-﻿using Eto.Drawing;
+﻿using System.Collections.Generic;
+using Eto.Drawing;
 using Eto.Forms;
 using SharpOffice.Core;
 using SharpOffice.Core.Window;
@@ -10,11 +11,11 @@ namespace SharpOffice.Runtime.Eto
     {
         private readonly MenuBuilder _menuBuilder;
 
-        public MainWindow(IApplication application, IMenuProvider menuProvider)
+        public MainWindow(IApplication application, IMenuProvider menuProvider, IEnumerable<IMenuComposer> menuComposers)
         {
             Title = application.Name + " - SharpOffice.Runtime.Eto (" + GetType().Assembly.GetName().Version + ")";
             
-            _menuBuilder = new MenuBuilder(menuProvider);
+            _menuBuilder = new MenuBuilder(menuProvider, menuComposers);
         }
 
         public new void Initialize()

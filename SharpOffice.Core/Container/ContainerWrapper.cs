@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using NLog;
 using SharpOffice.Core.Attributes;
 
 namespace SharpOffice.Core.Container
@@ -14,6 +15,7 @@ namespace SharpOffice.Core.Container
     {
         private static DryIoc.Container _container;
         private static Assembly _applicationAssembly;
+        private static readonly Logger Logger = LogManager.GetLogger("Container");
 
         public static DryIoc.Container GetContainer()
         {
@@ -22,8 +24,12 @@ namespace SharpOffice.Core.Container
 
         public static void Initialize(string applicationAssemblyName)
         {
+            Logger.Debug("Starting container initialization...");
+
             _container = new DryIoc.Container();
             AutoRegister(applicationAssemblyName);
+
+            Logger.Debug("Finished container initialization.");
         }
 
         private static void AutoRegister(string applicationAssemblyName)
@@ -34,6 +40,8 @@ namespace SharpOffice.Core.Container
             foreach (var assembly in assemblies.Concat(new[] {typeof (IRegistrationModule).Assembly})) //include SharpOffice.Core
                 foreach (var type in assembly.GetTypes().Where(t => typeof (IRegistrationModule).IsAssignableFrom(t) && t.IsClass))
                 {
+                    Logger.Debug("Registering types from \"{0}\"", type.Name);
+
                     IRegistrationModule module;
                     var noParams = type.GetConstructor(new Type[0]);
                     var appParam = type.GetConstructor(new[] {typeof (Assembly)});
@@ -79,7 +87,7 @@ namespace SharpOffice.Core.Container
                 }
                 catch (BadImageFormatException)
                 {
-                    continue;
+                    Logger.Warn("DLL file \"{0}\" is not a .NET assembly.", assemblyFile);
                 }
             }
             _applicationAssembly = apps.First(a => a.GetName().Name == applicationName);
@@ -89,6 +97,7 @@ namespace SharpOffice.Core.Container
 
         public static void Dispose()
         {
+            Logger.Debug("Disposing the container...");
             _container.Dispose();
         }
     }

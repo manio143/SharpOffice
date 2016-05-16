@@ -1,20 +1,29 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Eto.Forms;
+using NLog;
 using SharpOffice.Core.Window;
 
 namespace SharpOffice.Runtime.Eto.Utilities
 {
     public class MenuBuilder
     {
-        private IMenuProvider _menuProvider;
+        private readonly IMenuProvider _menuProvider;
+        private static readonly Logger Logger = LogManager.GetLogger("Runtime.Eto.MenuBuilder");
 
-        public MenuBuilder(IMenuProvider menuProvider)
+        public MenuBuilder(IMenuProvider menuProvider, IEnumerable<IMenuComposer> menuComposers)
         {
             _menuProvider = menuProvider;
+
+            Logger.Debug("Composing menu...");
+            foreach (var menuComposer in menuComposers)
+                menuComposer.Setup(menuProvider);
         }
 
         public MenuBar BuildMenu()
         {
+            Logger.Debug("Building menu...");
+
             var menu = new MenuBar();
             foreach (var topLevelMenu in _menuProvider.TopLevelMenus)
                 menu.Items.Add(CreateMenuItem(topLevelMenu));
