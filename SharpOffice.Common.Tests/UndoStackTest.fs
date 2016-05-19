@@ -7,7 +7,8 @@ open SharpOffice.Core.Commands
 
 [<TestFixture>]
 module UndoStackTest =
-    let _undoStack = new UndoStack()
+    
+    let mutable _undoStack = new UndoStack()
     
     let GetMockObject () =
         let mock = new Mock<ICommand>()
@@ -18,9 +19,12 @@ module UndoStackTest =
         _undoStack.Insert (obj)
         obj
 
-    let Undo = _undoStack.Undo
+    let Undo () = _undoStack.Undo()
 
-    let Redo = _undoStack.Redo
+    let Redo () = _undoStack.Redo()
+
+    [<SetUp>]
+    let Clear () = _undoStack <- new UndoStack()
 
     [<Test>]
     let BasicInsertTest () =
