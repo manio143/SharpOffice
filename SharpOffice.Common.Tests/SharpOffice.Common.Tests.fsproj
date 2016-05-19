@@ -59,7 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SampleTest.fs" />
+    <Compile Include="UndoStackTest.fs" />
+	<Compile Include="Configuration\ConfigurationFormatTest.fs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
