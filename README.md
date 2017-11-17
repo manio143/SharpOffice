@@ -1,4 +1,4 @@
-# SharpOffice #
+# SharpOffice (discontinued) #
 The purpose of this project is to create a cross-platform open-source Office suite written in C#. The idea is that it should be very modularized for easy plugin creation. Each application will be just a library that when plugged into the runtime will display all necessary features for the program while using the common code base.
 
 Windows | Linux
